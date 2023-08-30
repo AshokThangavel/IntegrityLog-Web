@@ -27,7 +27,6 @@ ClassMethod OnPage() As %Status
 		set gbl=$O(%gbl(dir,gbl),1,details) q:gbl=""
 			set details = $replace(details,$C(13,10),"<br>")
 			set alert=$S(+$piece(details,"<br>")>0:1,1:0)
-			;if i=1!(i=15)!(i=22)!(i=40) s alert=1
 			write "<tr class=""row "_$select(alert:" row-danger",1:"")_"""><td>"_dir_"</td><td>"_gbl_"</td><td>"_details_"</td>"
 		}
 	}			
