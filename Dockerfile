@@ -5,7 +5,7 @@ FROM $IMAGE
 WORKDIR /home/irisowner/dev
 
 ARG TESTS=0
-ARG MODULE="System-Task-REST"
+ARG MODULE="intergitylog-web"
 ARG NAMESPACE="USER"
 
 ## Embedded Python environment
