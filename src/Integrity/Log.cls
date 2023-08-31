@@ -5,6 +5,7 @@ ClassMethod OnPage() As %Status
 {
 	write "<link rel=""preconnect"" href=""https://fonts.googleapis.com""><link rel=""preconnect"" href=""https://fonts.gstatic.com"" crossorigin><link href=""https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@200;400&family=Source+Code+Pro&display=swap"" rel=""stylesheet"">"
 	do ..LoadSetup()
+	write "<title>Integrity log</title>"
 	write "<script src=""https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js""></script>"
 	write "<body>"
 	if '$data(%gbl) write "<h2>Integrity Log not found :(</h2>" return $$$OK
