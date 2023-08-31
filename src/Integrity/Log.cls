@@ -1,17 +1,19 @@
-Class Integrity.Log Extends %CSP.Page [ ProcedureBlock ]
+Class Samples.Integrity.Log Extends %CSP.Page [ ProcedureBlock ]
 {
 
 ClassMethod OnPage() As %Status
 {
-	Do ..LoadSetup()
-	Write "<script src=""https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js""></script>"
-	if '$data(%gbl) write "<h1>Integrity Log not found</h1>" return $$$OK
+	write "<link rel=""preconnect"" href=""https://fonts.googleapis.com""><link rel=""preconnect"" href=""https://fonts.gstatic.com"" crossorigin><link href=""https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@200;400&family=Source+Code+Pro&display=swap"" rel=""stylesheet"">"
+	do ..LoadSetup()
+	write "<script src=""https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js""></script>"
+	write "<body>"
+	if '$data(%gbl) write "<h2>Integrity Log not found :(</h2>" return $$$OK
 	write "<div>"
 	write "<img class=""portalLogo"" src=""portal/InterSystems IRIS.png"">"
 	write "<input id=""myInput"" class=""myInput"" type=""text"" placeholder=""Search..."">"
 	write "</div>"
 	write "<table class=""content-table"">"
-	write " <thead>"
+	write " <thead class='table-header'>"
 	write "<tr>"
 	write "<th>DB Dir</th>"
 	write "<th>GlobalName</th>"
@@ -21,17 +23,18 @@ ClassMethod OnPage() As %Status
 	write "<tbody id=""myTable"">"
 	set dir=""
 	for {
-		set dir=$O(%gbl(dir)) quit:dir=""
+		set dir=$order(%gbl(dir)) quit:dir=""
 		set gbl=""
 		for i=1:1{
-		set gbl=$O(%gbl(dir,gbl),1,details) q:gbl=""
+		set gbl=$order(%gbl(dir,gbl),1,details) q:gbl=""
 			set details = $replace(details,$C(13,10),"<br>")
-			set alert=$S(+$piece(details,"<br>")>0:1,1:0)
+			set alert=$select(+$piece(details,"<br>")>0:1,1:0)
 			write "<tr class=""row "_$select(alert:" row-danger",1:"")_"""><td>"_dir_"</td><td>"_gbl_"</td><td>"_details_"</td>"
 		}
 	}			
 	write "</tbody>"
 	write "</table>"
+	write "</body>"
 	;
 	&HTML<
 	<script language="javascript">
@@ -66,7 +69,6 @@ ClassMethod LoadIntegrityData() As %Boolean
  		}
  		if line["Global:" {
 	 		set cgbl=$P($P(line,": ",2)," ")
-	 		;set %gbl(cdir,$P($P(line,": ",2)," "))=""
 	 		set data=$P($P(line,": ",2)," ",2,*)
  		}
  		else {
@@ -77,7 +79,6 @@ ClassMethod LoadIntegrityData() As %Boolean
 	 		}
  		}
 	}
-	
 	return $$$OK
 }
 
@@ -86,21 +87,8 @@ ClassMethod LoadSetup()
 	Do ..cssStyleSheet()
 }
 
-ClientMethod Write() [ Language = javascript, ServerOnly = 1, WebMethod ]
-{
-	$(document).ready(function(){
-					  $("#myInput").on("keyup", function() {
-					    var value = $(this).val().toLowerCase();
-					    $("#myTable tr").filter(function() {
-					      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-					    });
-					  });
-					});
-}
-
 ClassMethod OnPageHEAD() As %Boolean
 {
-	
 	Do ..HyperEventHead(0,0)
 }
 
@@ -109,16 +97,14 @@ ClassMethod cssStyleSheet()
 	
 	&HTML<
 <style type="text/css">
-
-.body1 {
-         background: green;
-       }
-       table {
+ table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
-  width: 100%;
+  width: 99%;
 }
-
+body {
+	font-family: 'Roboto Mono', monospace;
+}
 td {
   border: 1px solid #dddddd;
   text-align: left;
@@ -126,11 +112,11 @@ td {
 }
 
 tr:nth-child(even) {
-  background-color: #dddddd;
-  
+  background-color: rgba(221,221,221,0.18);
 }
 .row:hover{
-	background-color: #dddddd;
+	background-color:#f5f5f5;
+	transform:scale(1.01);
 }
 .row-danger {
 	background-color: #ffdddd!important;
@@ -140,23 +126,37 @@ tr:nth-child(even) {
   	margin: 8px 0;
   	box-sizing: border-box;
   	border-radius: 5px;
+  	font-family:'Source Code Pro', monospace;
 }
 th{
 	background-color: #333695;
     color: white;
     border: 1px solid #dddddd;
- 	 text-align: left;
+ 	text-align: left;
   	padding: 4px;
 	position: sticky;
 	top:0;
+	box-shadow: 5px 5px 5px rgba(0, 0, 0.15);
+	padding: 1rem 2rem ;
+	text-align:center;
+	font-size:0.9rem;
+	font-weight:900;
+	font-family:'Source Code Pro', monospace;
 }
 .content-table {
-	border-radius: 5px 5px 0 0 ;
   	border-collapse:collapse;
-  	font-size:0.9em;
+  	font-size:0.8em;
   	overflow:hidden;
   	box-shadow: 0 0 5px rgba(0, 0, 0.15);
   	overflow-y: scroll;
+  	font-family:'Source Code Pro', monospace;
+}
+thead {
+	box-shadow: 0 5px 10px gray;
+}
+h2 {
+	font-family:'Source Code Pro', monospace;
+	color:#333695;
 }
 </style>
 	>
