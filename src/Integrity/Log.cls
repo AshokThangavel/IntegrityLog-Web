@@ -1,4 +1,4 @@
-Class Samples.Integrity.Log Extends %CSP.Page [ ProcedureBlock ]
+Class Integrity.Log Extends %CSP.Page [ ProcedureBlock ]
 {
 
 ClassMethod OnPage() As %Status
