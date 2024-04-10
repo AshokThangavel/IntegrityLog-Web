@@ -6,7 +6,7 @@
       <Version>1.0.1</Version>
       <Packaging>module</Packaging>
       <SourcesRoot>src</SourcesRoot>
-      <Resource Name="Integrity.PKG"/>
+      <Resource Name="ZPMModules.PKG"/>
     </Module>
   </Document>
 </Export>
