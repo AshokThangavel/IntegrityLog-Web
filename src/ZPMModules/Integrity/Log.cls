@@ -1,4 +1,4 @@
-Class ZPMModules.Log Extends %CSP.Page [ ProcedureBlock ]
+Class ZPMModules.IntegrityLog.Log Extends %CSP.Page [ ProcedureBlock ]
 {
 Parameter TableHeader As STRING = "DB Dir,GlobalName,Details";
 
